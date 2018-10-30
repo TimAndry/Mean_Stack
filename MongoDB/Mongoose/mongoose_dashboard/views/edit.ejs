@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1>Edit Animal Information</h1>
+        <form action="/update/<%= animal[0]._id %>" method="POST">
+            Name:<input type="text" name="name" value="<%= animal[0].name %>"><br><br> 
+            Species:<input type="text" name="species" value="<%= animal[0].species %>"><br><br> 
+            Age:<input type="text" name="age" value="<%= animal[0].age %>"><br><br>
+            <button type="submit">submit</button>
+        </form>
+        <% if(messages.registration) { %>
+            <% for (var x of messages.registration) { %>
+                <h4 class='error'><%= x %></h4>
+                <% } %>
+                    <% } %>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Counter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document).ready(function (){
+        $('#pushed').submit(false);
+        $('#reset').submit(false);
+            var socket = io();
+    
+            $('#pushed').submit(function(){
+                socket.emit('pushed_button', {count: $('#button1').val()})
+            });
+
+            $('#reset').submit(function(){
+                socket.emit('reset_button', {})
+            })
+            
+            socket.on('addcount', function(data){
+                $('#counting').html('you have clicked the button ' + data.count + ' times')
+            });
+
+         })
+    </script>
+    <style>
+        #wrapper{margin: auto;
+                 margin-top: 20%;
+                 text-align: center;}
+        #wrapper button{width: 125px;
+                        height: 70px;
+                        margin: 10px;
+                        font-size: 1.3em;}
+        #wrapper h2{padding: 10px;
+                    font-size: 5em;}
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <h1>You have clicked the button</h1>
+        <h3 id='counting'></h3>
+        <form action='/' id='pushed'>
+            <button id='button1' name ="button1" value ="1" type="submit" class="btn btn-success">Add 1</button>
+        </form>
+        <form action='/' id='reset'>
+            <button name ="button2" value ="1" type="submit" class="btn btn-danger">Reset</button>
+        </form>
+    </div>
+        
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dojo Survey</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type ="text/javascript">
+        $(document).ready(function (){
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        $('#dojoform').submit(false);
+        //does the form data disappear after posting because a new socket is made everytime the page refreshes?
+            var socket = io(); //1
+            $('#dojoform').submit(function () {
+                socket.emit('posting_form', {name: $('#name').val(), location: $('#location').val(), language: $('#language').val(), message: $('#text_message').val(),});
+            });
+            
+            socket.on('random_number', function(data){
+                $('#random').html(data.num);
+            });
+
+            socket.on('user_data', function(data){
+                $('#message').html('<h4>' + data.user_name + '</h4>' + '<p>' + data.user_location + '</p>' + '<p>' + data.user_language + '</p>' + '<p>' + data.user_message + '</p>');
+            })
+         })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div id="message"></div>
+        <h1>Survey Form</h1>
+        <br>
+        <form action='/submit' method='post' id='dojoform'>
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Your Name:</label>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Dojo Location</label>
+                <select name="location" class="form-control" id="location">
+                    <option value="Chicago">Chicago</option>
+                    <option value="Sanjose">San Jose</option>
+                    <option value="Seattle">Seattle</option>
+                    <option value="Burbank">Burbank</option>
+                    <option value="LA">LA</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Favorite Language</label>
+                <select name="language" class="form-control" id="language">
+                    <option value="javascript">JavaScript</option>
+                    <option value="python">Python</option>
+                    <option value="c#">C#</option>
+                    <option value="java">Java</option>
+                    <option value="c++">C++</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Comment (optional)</label>
+                <textarea name="message" class="form-control" id="text_message" rows="3"></textarea>
+            </div>
+            <button name="submit" type="submit" class="btn btn-primary" id="submit">Submit</button>
+        </form>
+        <h2 id='random'></h2>
+    </div>
+
+</body>
+
+</html>

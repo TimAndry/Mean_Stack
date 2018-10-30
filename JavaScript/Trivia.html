@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <button id="getquestion">Get Questions</button>
+
+    <script>
+        var numQuestions = window.prompt("How many questions would you like?");
+        var count = 0;
+        $('#getquestion').click(function(){
+            $.get("https://opentdb.com/api.php?amount=" + numQuestions + "&type=multiple", question);
+            console.log(numQuestions);
+        });
+
+        function question(data){
+            console.log(data);
+            console.log(numQuestions);
+            console.log('10000000');
+            for(var i = 0; i < numQuestions; i++){
+                $("body").append("<h1>" + data.results[i].category + "</h1><p>" + data.results[i].question + "</p><br>");
+                $("body").append('<form action="Trivia.html" id="carform"><input type="radio" value=" '+ data.results[i].correct_answer + '">' + data.results[i].correct_answer +  '<br><input type="radio" value=" '+ data.results[i].incorrect_answers[0] + '">' + data.results[i].incorrect_answers[0] +'<br><input type="radio" value=" '+ data.results[i].incorrect_answers[1] + '">' + data.results[i].incorrect_answers[1] +  '<br><input type="radio" value=" '+ data.results[i].incorrect_answers[2] + '">' + data.results[i].incorrect_answers[2] +    '<br><br><input type="submit" id = "answering"></form>');
+            }
+ 
+        }
+
+        //    $('#getname').click(function(){
+        //        $.get("https://api.github.com/users/TimAndry", displayName)
+        //    });
+
+        //    function displayName(data){
+        //        $("body").append("<h1>" + data.login + "</h1>")
+        //    }
+    </script>
+</body>
+</html>

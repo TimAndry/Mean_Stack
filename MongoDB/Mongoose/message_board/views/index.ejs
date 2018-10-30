@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            margin: auto;
+            width: 80%;
+        }
+
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1>The Dojo Message Board</h1>
+        <form action="/message" method="POST">
+            Name: <input type="text" name="name"><br><br>
+            Message: <textarea name="message" cols='50' rows= '5'></textarea><br><br>
+            <button type="submit">submit</button>
+        </form>
+        <br><br>
+        <% if(messages.registration) { %>
+            <% for (var x of messages.registration) { %>
+                <p class='error'><%= x %></p>
+            <% } %>
+        <% } %>
+        
+        <% allmessages.forEach(function (onemessage) { %>
+            <h4><%= onemessage.name %></h4>
+            <p><%= onemessage.message %></p>
+            <form action="/comment/<%=onemessage._id %>" method="POST">
+                Name: <input type="text" name="name"><br><br>
+                Comment: <textarea name="comment" cols='40' rows= '3'></textarea><br><br>
+                <button type="submit">submit</button>
+            </form>
+            <% for( var i of onemessage.comments){ %>
+                <h4><%= i.name %></h4>
+                <p><%= i.comment %>  </p>
+            <% } %>
+            <br>
+        <% }) %>
+    </div>
+</body>
+
+</html>

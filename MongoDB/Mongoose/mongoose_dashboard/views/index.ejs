@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1>Random Animals at this Zoo</h1><br><br>
+        <a href='/new'><button>Add Animal</button></a>
+    </div><br><br><br>
+</body>
+<% animals.forEach(function (animal) { %>
+    <a href = "/show/<%= animal._id %>"><h4><%= animal.name %></h4></a>
+    <p><%= animal.species %></p>
+    <p><%= animal.age %></p>
+    <a href = '/edit/<%= animal._id %>'><button>edit</button></a>
+    <form action='/delete/<%= animal._id %>', method = "POST">
+        <button type = submit>delete</button>
+    </form>
+    <br><br>
+    <% }) %>
+</html>
